@@ -1,0 +1,86 @@
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0b0b14;
+  color:white;
+  text-align:center;
+}
+
+/* TITRE */
+h1{
+  margin:15px 0;
+  font-size:22px;
+  color:#ffffff;
+}
+
+/* MULTIPLICATEUR */
+#multiplier{
+  font-size:55px;
+  font-weight:bold;
+  color:#00ff88;
+  text-shadow:0 0 15px #00ff88, 0 0 30px #00ff88;
+  margin:20px 0;
+}
+
+/* ZONE JEU */
+.crash-box{
+  position:relative;
+  width:90%;
+  max-width:420px;
+  height:260px;
+  margin:0 auto;
+  background:radial-gradient(circle at center, #1a1a2e, #0a0a14);
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 0 20px rgba(0,255,136,0.2);
+}
+
+/* AVION */
+#plane{
+  position:absolute;
+  left:30px;
+  top:180px;
+  font-size:45px;
+  filter:drop-shadow(0 0 10px #00ff88);
+  transition:transform 0.05s linear;
+}
+
+/* CONTROLES */
+.controls{
+  margin-top:15px;
+}
+
+input{
+  padding:12px;
+  width:60%;
+  border:none;
+  border-radius:8px;
+  outline:none;
+  font-size:14px;
+}
+
+/* BOUTON UNIQUE BET / CASHOUT */
+button{
+  padding:12px 18px;
+  margin-left:8px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#00ff88;
+  color:#000;
+  transition:0.2s;
+  box-shadow:0 0 10px #00ff88;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #00ff88;
+}
+
+/* STATUS */
+#status{
+  margin-top:12px;
+  opacity:0.8;
+  font-size:14px;
+}

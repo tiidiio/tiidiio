@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JetX Demo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>✈️ JetX Demo</h1>
+
+<!-- MULTIPLICATEUR -->
+<div id="multiplier">1.00x</div>
+
+<!-- AVION -->
+<div class="crash-box">
+  <div id="plane">✈️</div>
+</div>
+
+<!-- MISE -->
+<div class="controls">
+
+  <input id="bet" type="number" placeholder="mise">
+
+  <!-- 🔥 UN SEUL BOUTON -->
+  <button id="actionBtn" onclick="action()">
+    BET
+  </button>
+
+</div>
+
+<!-- STATUS -->
+<p id="status">⏳ attente du round</p>
+
+<!-- SOCKET (si serveur utilisé) -->
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- SCRIPT -->
+<script src="script.js"></script>
+
+</body>
+</html>
