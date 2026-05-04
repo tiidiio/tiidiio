@@ -1,10 +1,10 @@
 {
   "name": "tiidiio",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "description": "Crash / JetX game project",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,13 @@
     "mongoose": "^9.6.1",
     "socket.io": "^4.8.3",
     "ws": "^8.20.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiidiio/tiidiio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tiidiio/tiidiio/issues"
+  },
+  "homepage": "https://github.com/tiidiio/tiidiio#readme"
 }

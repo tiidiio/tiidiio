@@ -1,6 +1,5 @@
 const express = require("express");
 const http = require("http");
-const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 
 const app = express();
@@ -10,76 +9,57 @@ const io = new Server(server, {
   cors: { origin: "*" }
 });
 
-app.use(express.static(__dirname));
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+// ================= ROUTE TEST =================
+app.get("/ping", (req, res) => {
+  res.send("PONG");
 });
 
-/* ================= MONGO ================= */
-mongoose.connect(
-  "mongodb+srv://tidianesdiallo_db_usertiidiiouser:koumantou@cluster0.38tbpuz.mongodb.net/tiidiio?retryWrites=true&w=majority&appName=Cluster0"
-)
-.then(() => console.log("✅ MongoDB OK"))
-.catch(err => console.log("❌ DB error", err));
-
-/* ================= GAME STATE ================= */
-let multiplier = 1;
-let crashPoint = 0;
-let running = false;
-let interval = null;
-
-/* ================= ROUND SYSTEM ================= */
-function startRound() {
-
-  multiplier = 1;
-  running = true;
-
-  // 🎯 crash contrôlé (plus réaliste JetX)
-  crashPoint = +(Math.random() * 5 + 1.5).toFixed(2);
-
-  console.log("🎮 ROUND START | crash =", crashPoint);
-
-  interval = setInterval(gameLoop, 50);
-}
-
-function gameLoop() {
-
-  if (!running) return;
-
-  // 📈 courbe exponentielle (style Aviator réel)
-  multiplier *= 1.02;
-
-  io.emit("multiplier", multiplier.toFixed(2));
-
-  // 💥 CRASH
-  if (multiplier >= crashPoint) {
-
-    clearInterval(interval);
-    running = false;
-
-    io.emit("crash", crashPoint);
-
-    console.log("💥 CRASH AT", crashPoint);
-
-    setTimeout(startRound, 3000);
-  }
-}
-
-/* ================= SOCKET ================= */
+// ================= SOCKET =================
 io.on("connection", (socket) => {
-  console.log("👤 joueur connecté");
+  console.log("👤 FRONTEND CONNECTED");
 
-  socket.emit("welcome", {
-    multiplier,
-    running
+  socket.on("bet", (data) => {
+    console.log("BET RECEIVED:", data);
+
+    socket.emit("betAccepted", {
+      balance: 1000
+    });
+  });
+
+  socket.on("cashout", (data) => {
+    console.log("CASHOUT:", data);
+
+    socket.emit("win", {
+      amount: data.multiplier * 100
+    });
   });
 });
 
-/* ================= START SERVER ================= */
-const PORT = process.env.PORT || 3000;
+// ================= CRASH ENGINE =================
+function startRound() {
+  let m = 1;
 
-server.listen(PORT, () => {
-  console.log("🚀 JetX PRO running on port " + PORT);
+  io.emit("start");
+
+  const interval = setInterval(() => {
+    m *= 1.02;
+
+    io.emit("multiplier", m.toFixed(2));
+
+    if (m > 3) {
+      clearInterval(interval);
+
+      io.emit("crash", m.toFixed(2));
+
+      setTimeout(startRound, 3000);
+    }
+  }, 50);
+}
+
+// ================= START SERVER =================
+server.listen(3000, "0.0.0.0", () => {
+  console.log("🚀 SERVER RUNNING ON 3000");
   startRound();
 });
