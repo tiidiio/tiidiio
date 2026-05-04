@@ -6,74 +6,80 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-// ⚠️ CORS (important pour Render)
 const io = new Server(server, {
-  cors: {
-    origin: "*"
-  }
+  cors: { origin: "*" }
 });
 
-// 🔥 SERVIR LES FICHIERS
 app.use(express.static(__dirname));
 
-// 🔥 ROUTE PRINCIPALE (corrige le "not found")
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// ================= MONGODB =================
+/* ================= MONGO ================= */
 mongoose.connect(
   "mongodb+srv://tidianesdiallo_db_usertiidiiouser:koumantou@cluster0.38tbpuz.mongodb.net/tiidiio?retryWrites=true&w=majority&appName=Cluster0"
 )
-.then(() => console.log("✅ MongoDB connecté"))
+.then(() => console.log("✅ MongoDB OK"))
 .catch(err => console.log("❌ DB error", err));
 
-// ================= GAME =================
-let m = 1;
+/* ================= GAME STATE ================= */
+let multiplier = 1;
 let crashPoint = 0;
-let startTime = 0;
 let running = false;
+let interval = null;
 
+/* ================= ROUND SYSTEM ================= */
 function startRound() {
-  m = 1;
-  startTime = Date.now();
 
-  crashPoint = Math.random() * 6 + 2;
+  multiplier = 1;
   running = true;
 
-  console.log("🎮 Round start | crash =", crashPoint.toFixed(2));
-  loop();
+  // 🎯 crash contrôlé (plus réaliste JetX)
+  crashPoint = +(Math.random() * 5 + 1.5).toFixed(2);
+
+  console.log("🎮 ROUND START | crash =", crashPoint);
+
+  interval = setInterval(gameLoop, 50);
 }
 
-function loop() {
+function gameLoop() {
+
   if (!running) return;
 
-  const elapsed = (Date.now() - startTime) / 1000;
-  m = Math.exp(elapsed * 0.28);
+  // 📈 courbe exponentielle (style Aviator réel)
+  multiplier *= 1.02;
 
-  io.emit("multiplier", m);
+  io.emit("multiplier", multiplier.toFixed(2));
 
-  if (m >= crashPoint) {
+  // 💥 CRASH
+  if (multiplier >= crashPoint) {
+
+    clearInterval(interval);
     running = false;
+
     io.emit("crash", crashPoint);
 
-    setTimeout(startRound, 2000);
-    return;
-  }
+    console.log("💥 CRASH AT", crashPoint);
 
-  setTimeout(loop, 50);
+    setTimeout(startRound, 3000);
+  }
 }
 
+/* ================= SOCKET ================= */
 io.on("connection", (socket) => {
-  console.log("👤 client connecté");
+  console.log("👤 joueur connecté");
+
+  socket.emit("welcome", {
+    multiplier,
+    running
+  });
 });
 
-// 🔥 PORT RENDER (CRITIQUE)
+/* ================= START SERVER ================= */
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-  console.log("🚀 JetX PRO READY on port " + PORT);
+  console.log("🚀 JetX PRO running on port " + PORT);
+  startRound();
 });
-
-// START GAME
-startRound();

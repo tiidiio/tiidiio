@@ -1,43 +1,82 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>tidio crash</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIDIO CRASH</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>✈️ tidio crash</h1>
-
-<!-- MULTIPLICATEUR -->
-<div id="multiplier">1.00x</div>
-
-<!-- AVION -->
-<div class="crash-box">
-  <div id="plane">✈️</div>
+<!-- 🔥 TICKER -->
+<div class="ticker">
+  <div class="ticker-content">
+    Tidio le Génie • Cell: +22370560515 • Mail: tidiane.s.diallo@gmail.com
+  </div>
 </div>
 
-<!-- MISE -->
-<div class="controls">
+<!-- 🌌 APP -->
+<div class="app">
 
-  <input id="bet" type="number" placeholder="mise">
+  <!-- 🎮 GAME AREA -->
+  <div class="game-box">
 
-  <!-- 🔥 UN SEUL BOUTON -->
-  <button id="actionBtn" onclick="action()">
-    BET
-  </button>
+    <!-- ✈️ SKY -->
+    <div class="plane-area">
+
+      <div class="track"></div>
+
+      <div id="plane" class="plane">✈️</div>
+
+      <div id="multiplier">1.00x</div>
+
+    </div>
+
+    <!-- 📊 HISTORY BAR -->
+    <div id="historyBar" class="history-bar"></div>
+
+  </div>
+
+  <!-- ⚙️ CONTROL PANEL -->
+  <div class="control-panel">
+
+    <!-- 💸 BET INPUT -->
+    <input id="betInput" type="number" placeholder="Mise (XOF)" class="bet-input">
+
+    <!-- 🎯 QUICK BETS -->
+    <div class="quick-bets">
+      <button onclick="setBet(5000)">5K</button>
+      <button onclick="setBet(20000)">20K</button>
+      <button onclick="setBet(70000)">70K</button>
+    </div>
+
+    <!-- 🚀 MAIN BUTTON -->
+    <button id="actionBtn" class="main-btn">
+      MISER
+    </button>
+
+  </div>
+
+  <!-- 👥 PLAYERS -->
+  <div class="players-box">
+    <h3>Joueurs</h3>
+    <div id="players"></div>
+  </div>
+
+  <!-- 📁 HISTORY -->
+  <div class="history-box">
+    <h3>Historique</h3>
+    <div id="history"></div>
+  </div>
 
 </div>
 
-<!-- STATUS -->
-<p id="status">⏳ attente du round</p>
-
-<!-- SOCKET (si serveur utilisé) -->
+<!-- 🌐 SOCKET.IO -->
 <script src="/socket.io/socket.io.js"></script>
 
-<!-- SCRIPT -->
+<!-- 📜 SCRIPT JEU -->
 <script src="script.js"></script>
 
 </body>
