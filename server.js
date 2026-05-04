@@ -5,9 +5,21 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
 
+// ⚠️ CORS (important pour Render)
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
+
+// 🔥 SERVIR LES FICHIERS
 app.use(express.static(__dirname));
+
+// 🔥 ROUTE PRINCIPALE (corrige le "not found")
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 // ================= MONGODB =================
 mongoose.connect(
@@ -30,7 +42,6 @@ function startRound() {
   running = true;
 
   console.log("🎮 Round start | crash =", crashPoint.toFixed(2));
-
   loop();
 }
 
@@ -38,14 +49,12 @@ function loop() {
   if (!running) return;
 
   const elapsed = (Date.now() - startTime) / 1000;
-
   m = Math.exp(elapsed * 0.28);
 
   io.emit("multiplier", m);
 
   if (m >= crashPoint) {
     running = false;
-
     io.emit("crash", crashPoint);
 
     setTimeout(startRound, 2000);
@@ -59,8 +68,12 @@ io.on("connection", (socket) => {
   console.log("👤 client connecté");
 });
 
-server.listen(3000, () => {
-  console.log("🚀 JetX PRO READY http://localhost:3000");
+// 🔥 PORT RENDER (CRITIQUE)
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log("🚀 JetX PRO READY on port " + PORT);
 });
 
+// START GAME
 startRound();
