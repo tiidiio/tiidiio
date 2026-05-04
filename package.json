@@ -2,9 +2,9 @@
   "name": "tiidiio",
   "version": "1.0.0",
   "description": "Crash / JetX game project",
-  "main": "backend/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
