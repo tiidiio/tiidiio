@@ -1,86 +1,118 @@
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#0b0b14;
-  color:white;
-  text-align:center;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+
+  /* 🌤️ CIEL RÉALISTE */
+  background: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee") no-repeat center center fixed;
+  background-size: cover;
+
+  overflow: hidden;
+}
+
+/* 🔥 OVERLAY CASINO PRO */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.85));
+  z-index: -1;
 }
 
 /* TITRE */
-h1{
-  margin:15px 0;
-  font-size:22px;
-  color:#ffffff;
+h1 {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #00ffcc;
+  text-shadow: 0 0 10px rgba(0,255,204,0.6);
 }
 
-/* MULTIPLICATEUR */
-#multiplier{
-  font-size:55px;
-  font-weight:bold;
-  color:#00ff88;
-  text-shadow:0 0 15px #00ff88, 0 0 30px #00ff88;
-  margin:20px 0;
+/* MULTIPLICATEUR CASINO */
+#multiplier {
+  font-size: 60px;
+  font-weight: bold;
+  margin: 30px 0;
+  color: #00ffcc;
+  text-shadow: 0 0 20px #00ffcc, 0 0 40px rgba(0,255,204,0.5);
 }
 
-/* ZONE JEU */
-.crash-box{
-  position:relative;
-  width:90%;
-  max-width:420px;
-  height:260px;
-  margin:0 auto;
-  background:radial-gradient(circle at center, #1a1a2e, #0a0a14);
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 0 20px rgba(0,255,136,0.2);
+/* ZONE AVION */
+.crash-box {
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* AVION */
-#plane{
-  position:absolute;
-  left:30px;
-  top:180px;
-  font-size:45px;
-  filter:drop-shadow(0 0 10px #00ff88);
-  transition:transform 0.05s linear;
+/* AVION PRO */
+#plane {
+  font-size: 55px;
+  filter: drop-shadow(0 0 10px rgba(0,255,204,0.8));
+  transition: all 0.2s ease;
 }
 
-/* CONTROLES */
-.controls{
-  margin-top:15px;
+/* CONTROLS */
+.controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-input{
-  padding:12px;
-  width:60%;
-  border:none;
-  border-radius:8px;
-  outline:none;
-  font-size:14px;
+/* INPUT */
+input {
+  width: 80%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  outline: none;
 }
 
-/* BOUTON UNIQUE BET / CASHOUT */
-button{
-  padding:12px 18px;
-  margin-left:8px;
-  border:none;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#00ff88;
-  color:#000;
-  transition:0.2s;
-  box-shadow:0 0 10px #00ff88;
-}
-
-button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00ff88;
+/* BOUTON CASINO */
+button {
+  width: 85%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00ffcc, #00aaff);
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 15px #00ffcc;
+  cursor: pointer;
 }
 
 /* STATUS */
-#status{
-  margin-top:12px;
-  opacity:0.8;
-  font-size:14px;
+#status {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* 📱 MOBILE ULTRA CLEAN */
+@media (max-width: 600px) {
+  #multiplier {
+    font-size: 42px;
+  }
+
+  #plane {
+    font-size: 45px;
+  }
+
+  input, button {
+    width: 90%;
+  }
+
+  button {
+    font-size: 16px;
+  }
 }
